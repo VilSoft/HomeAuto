@@ -2,9 +2,9 @@
 import React, { useState } from 'react'
 import { timeForm } from '@/interfaces'
 import style from '@/styles/TimeForm.module.css'
-import { setTimes } from '@/pages/redux/features/swimSlices'
+import { setTimes } from '@/redux/features/swimSlices'
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/pages/redux/store';
+import { AppDispatch } from '@/redux/store';
 
 function addTimeForm(props: any) {
 
@@ -102,7 +102,6 @@ function addTimeForm(props: any) {
 
   const onSubmit = async (event:any) => {
     event.preventDefault();
-    console.log(formData)
     const res = await fetch('/api/times/add', { 
         method: 'POST', 
         headers: {

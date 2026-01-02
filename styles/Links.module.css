@@ -1,0 +1,17 @@
+.LinkContainer {
+    border: solid 2px gray;
+    border-radius: 1em;
+    background-color: lightgray;
+    position: relative;
+}
+
+.LinkContainer:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    background-color: darkgrey !important;
+}
+
+.text {
+    color: black;
+    text-decoration: none;
+}

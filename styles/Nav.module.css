@@ -1,0 +1,16 @@
+.nav {
+    background-color: lightgray;
+    position: sticky;
+    z-index: 1;
+    box-shadow: 0 1em 1em rgba(255, 255, 255, 0.75);
+}
+
+.item {
+    margin-top: 1rem !important
+}
+
+.search {
+    margin-top: 1rem !important;
+    margin-right: 1rem;
+    float: right;
+}

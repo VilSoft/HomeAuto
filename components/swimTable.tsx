@@ -10,9 +10,9 @@ import {
     TableCell
   } from "@nextui-org/react";
 import style from '@/styles/Swim.module.css'
-import { setTimes } from '@/pages/redux/features/swimSlices'
+import { setTimes } from '@/redux/features/swimSlices'
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/pages/redux/store';
+import { AppDispatch } from '@/redux/store';
 
 const headers = [
     {key: "name", label: "NAME", sortDir: false}, 

@@ -6,6 +6,8 @@ import AddTimeForm from './AddTimeForm'
 import SwimTable from './SwimTable'
 import CheckLeekDuck from './CheckLeekDuck'
 import Chart from './Chart'
+import DDGSearch from './DDGSearch'
+import QuickLinks from './QuickLinks'
 
 export {
     Weather,
@@ -15,5 +17,7 @@ export {
     AddTimeForm,
     SwimTable,
     CheckLeekDuck,
-    Chart
+    Chart,
+    DDGSearch,
+    QuickLinks
 }

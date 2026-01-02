@@ -137,9 +137,9 @@ function forecast(day : any) {
         if (night) {
             setShowDay(
                 <div>
-                    {getIcon(dayToShow[1].icon)}
-                    <p>{dayToShow[1].shortForecast}</p>
-                    <p>{dayToShow[1].temperature}°</p>
+                    {getIcon(dayToShow[1]?.icon)}
+                    <p>{dayToShow[1]?.shortForecast}</p>
+                    <p>{dayToShow[1]?.temperature}°</p>
                 </div>
             )
         }
@@ -157,8 +157,8 @@ function forecast(day : any) {
     return (
         <div className="container">
             <div className={`row ${styles.weatherRow}`}>
-                <p>{dayToShow[0].name}</p>
-                <div className="col-sm" key={dayToShow[0].name} onMouseOver={() => showNight(true)} onMouseOut={() => showNight(false)}>
+                <p>{dayToShow[0]?.name}</p>
+                <div className="col-sm" key={dayToShow[0]?.name} onMouseOver={() => showNight(true)} onMouseOut={() => showNight(false)}>
                     {showDay}
                 </div>
             </div>

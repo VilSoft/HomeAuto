@@ -39,7 +39,6 @@ function CheckLeekDuck() {
         getDuck()
 
     }, [duck])
-    console.log(elements)
 
   return (
     <div className={`container ${style.DuckContainer}`}>

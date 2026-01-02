@@ -13,7 +13,9 @@ import {
 } from 'chart.js'
 import { Chart, Line } from 'react-chartjs-2'
 import { timeForm } from '@/interfaces'
-import { useAppSelector } from '@/pages/redux/store'
+import { useAppSelector } from '@/redux/store'
+import { Button } from '@/components/ui/button'
+import style from '@/styles/Chat.module.css'
 
 ChartJS.register(
   CategoryScale,
@@ -30,11 +32,18 @@ type Label = {
   dateNum: number
 }
 
+const Distances: Array<number> = [50, 100, 200, 400, 500, 800, 1000, 1500, 1650]
+const Strokes: Array<string> = ["Freestyle", "Backstroke", "Breaststroke", "Butterfly", "IM"]
+const Names: Array<string> = ["Kassie", "Kai"]
+
 function SwimChart() {
 
   const [labels, setLabels] = useState<Array<string>>([])
   const [dataSet, setDataSet] = useState<Array<number>>([]);
   const [sort, setSort] = useState<string>('name')  
+  const [name, setName] = useState<string>(Names[0])
+  const [distance, setDistance] = useState<number>(Distances[1])
+  const [stroke, setStroke] = useState<string>(Strokes[0])
 
   let times: Array<timeForm> = useAppSelector((state) => state.swimReducer.value.times)
 
@@ -76,7 +85,6 @@ function SwimChart() {
       tooltip: {
         callbacks: {
           label: function(context: any) {
-            console.log(context)
             let minNum: number = Math.floor(context.raw / 60);
             let minSec: number = minNum * 60;
             let min: string = minNum > 0 ? String(minNum) + ':' : ''
@@ -115,9 +123,23 @@ function SwimChart() {
     }
   }
 
+  const handleNameChange = (which: number) => {
+    setName(Names[which])
+  }
+
   return (
-    <div>
-        <Line data={data} width={100} height={40} options={options} />
+    <div className={`container`}>
+      <div className={`row`}>
+        <div className={`col-md-4 ${style.form}`}>
+          <div>
+            <Button variant={`${name == Names[0] ? 'secondary' : 'ghost'}`} onClick={() => handleNameChange(0)}>Kassie</Button>
+            <Button variant={`${name == Names[1] ? 'secondary' : 'ghost'}`} onClick={() => handleNameChange(1)}>Kai</Button>
+          </div>
+        </div>
+        <div className={`col-md-8 ${style.chart}`}>
+          <Line data={data} width={100} height={40} options={options} />
+        </div>
+      </div>
     </div>
   )
 }

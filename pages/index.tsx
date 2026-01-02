@@ -3,13 +3,15 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
 // import "./globals.css";
 import style from '@/styles/Home.module.css'
 // import { Weather, Swim } from '@/components'
+import Layout from '@/components/Layout'
 import Weather from '@/components/Weather'
 import Swim from '@/components/Swim'
 import CheckLeekDuck from '@/components/CheckLeekDuck';
+import QuickLinks from '@/components/QuickLinks';
 
 export default function Home() {
   return (
-    <main>
+    <Layout>
       <h1 className={style.title}>
         The Kai Kassie House&nbsp;
       </h1>
@@ -18,14 +20,18 @@ export default function Home() {
           <Weather />
         </div>
         <div className="row">
-          <div className="col-sm">
+          {/* Masters has been deprecated for now? */}
+          {/* <div className="col-sm">
             <Swim />
+          </div> */}
+          <div className="col-sm">
+            <QuickLinks />
           </div>
           <div className="col-sm">
             <CheckLeekDuck />
           </div>
         </div>
       </div>
-    </main>
+    </Layout>
   )
 }
