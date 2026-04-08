@@ -9,11 +9,14 @@ WORKDIR /app
 
 # Copy necessary files to the container
 COPY package*.json ./
-COPY .next ./.next
-COPY public ./public
+# COPY .next ./.next
+# COPY public ./public
 
 # Install production dependencies
 RUN npm install --production
+
+COPY . .
+RUN npm run build
 
 # Expose the port the app runs on
 EXPOSE 4000
