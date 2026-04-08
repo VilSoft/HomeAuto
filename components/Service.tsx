@@ -23,7 +23,7 @@ export const services: Service[] = [
     id: "portainer",
     name: "Portainer",
     description: "Docker management",
-    url: "https://server0.home:9443/#!/home",
+    url: "http://portainer.server0.home/",
     icon: icons.Portainer,
     admin: true
   },
@@ -31,14 +31,14 @@ export const services: Service[] = [
     id: "jellyfin",
     name: "Jellyfin",
     description: "Media server",
-    url: "http://server0.home:8096",
+    url: "http://jellyfin.server0.home",
     icon: icons.Jellyfin,
   },
   {
     id: "kassies",
     name: "Kassies Recipes",
     description: "Family recipes",
-    url: "http://server0.home:3000",
+    url: "http://recipes.server0.home",
     icon: icons.Kassiesrecipies,
   },
 ];

@@ -10,3 +10,19 @@
   margin: 0;
   padding: 0;
 }
+
+.forecastWrapper {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  will-change: opacity, transform;
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
