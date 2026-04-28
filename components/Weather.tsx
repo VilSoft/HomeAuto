@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react"
-import "bootstrap/dist/css/bootstrap.min.css"
+import { motion } from "framer-motion"
 import styles from "@/styles/Weather.module.css"
 import Axios from "./Axios"
 import Forecast from "./Forecast"
@@ -49,7 +49,6 @@ export default function Weather() {
       .then(res => {
         const periods: ForecastPeriod[] = res.data?.properties?.periods ?? []
 
-        // Group into tuples of [day, night], fallback to day if night missing
         const grouped: [ForecastPeriod, ForecastPeriod][] = []
         for (let i = 0; i < periods.length; i += 2) {
           const dayPair: [ForecastPeriod, ForecastPeriod] = [
@@ -62,7 +61,7 @@ export default function Weather() {
         setTimeout(() => {
           setForecast(grouped)
           setIsTransitioning(false)
-        }, 250) // match fade animation duration
+        }, 200)
       })
       .catch(err => {
         console.error(err)
@@ -73,41 +72,41 @@ export default function Weather() {
   }, [location])
 
   return (
-    <div className={`container ${styles.weatherContainer}`}>
-      {/* Location selector */}
-      <div className="row mb-3">
-        <div className="col-md-4">
-          <select
-            className="form-select"
-            value={location.id}
-            onChange={e => {
-              const selected = (locations as Location[]).find(
-                l => l.id === e.target.value
-              )
-              if (selected) setLocation({ ...selected }) // clone for new reference
-            }}
-          >
-            {(locations as Location[]).map(loc => (
-              <option key={loc.id} value={loc.id}>
-                {loc.name}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div className={styles.weatherCard}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+        <h2 className="text-lg font-semibold text-foreground">Weather</h2>
+        <select
+          className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface-raised))] px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.4)] transition-all w-full sm:w-48"
+          value={location.id}
+          onChange={e => {
+            const selected = (locations as Location[]).find(
+              l => l.id === e.target.value
+            )
+            if (selected) setLocation({ ...selected })
+          }}
+        >
+          {(locations as Location[]).map(loc => (
+            <option key={loc.id} value={loc.id}>
+              {loc.name}
+            </option>
+          ))}
+        </select>
       </div>
 
-      {error && <p className="text-danger">{error}</p>}
+      {error && (
+        <p className="text-sm text-destructive mb-4">{error}</p>
+      )}
 
-      {/* Animated forecast wrapper */}
-      <div
-        key={location.id} // forces remount on location change
-        className={`${styles.forecastWrapper} ${
-          isTransitioning ? styles.fadeOut : styles.fadeIn
-        }`}
+      <motion.div
+        key={location.id}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: isTransitioning ? 0 : 1, y: isTransitioning ? 8 : 0 }}
+        transition={{ duration: 0.2 }}
       >
-        {loading && <p>Loading weather…</p>}
-
-        <div className="row">
+        {loading && (
+          <p className="text-sm text-foreground-muted py-8 text-center">Loading weather…</p>
+        )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
           {forecast.map((forecastItem, index) => (
             <Forecast
               key={`${location.id}-${index}`}
@@ -115,8 +114,7 @@ export default function Weather() {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
-

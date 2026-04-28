@@ -1,16 +1,11 @@
 .nav {
-    background-color: lightgray;
-    position: sticky;
-    z-index: 1;
-    box-shadow: 0 1em 1em rgba(255, 255, 255, 0.75);
-}
-
-.item {
-    margin-top: 1rem !important
+  background: hsl(var(--nav-bg) / 0.85) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid hsl(var(--nav-border)) !important;
+  box-shadow: none !important;
 }
 
 .search {
-    margin-top: 1rem !important;
-    margin-right: 1rem;
-    float: right;
+  margin-right: 0.5rem;
 }

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(ls -la \"E:\\\\\\\\Projects\\\\\\\\Home_auto\\\\\\\\homeauto\\\\\\\\components\\\\\\\\\")",
+      "Bash(ls -la \"E:\\\\\\\\Projects\\\\\\\\Home_auto\\\\\\\\homeauto\\\\\\\\\")",
+      "Bash(ls *)",
+      "Bash(npm run *)"
+    ]
+  }
+}

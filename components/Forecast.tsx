@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react"
 import Image from "next/image"
+import { motion } from "framer-motion"
 import * as icons from "@/icons/weather/animated"
 import styles from "@/styles/Weather.module.css"
 
@@ -12,10 +13,9 @@ interface ForecastPeriod {
 }
 
 interface ForecastProps {
-  day: [ForecastPeriod, ForecastPeriod] // [day, night]
+  day: [ForecastPeriod, ForecastPeriod]
 }
 
-// Map NWS icon code keywords to your imported icon images
 const iconMap: Record<string, any> = {
   skc: { day: icons.ClearDay, night: icons.ClearNight },
   few: { day: icons.ClearDay, night: icons.ClearNight },
@@ -46,7 +46,6 @@ export default function Forecast({ day }: ForecastProps) {
 
   const current = hover ? day[1] : day[0]
 
-  // Extract the main code from the URL, fallback to 'skc'
   const getCode = (iconUrl?: string) => {
     if (!iconUrl) return "skc"
     const parts = iconUrl.split("/").pop() ?? ""
@@ -58,17 +57,21 @@ export default function Forecast({ day }: ForecastProps) {
   const icon = iconMap[iconCode]?.[hover ? "night" : "day"] ?? icons.ClearDay
 
   return (
-    <div className={`col ${styles.weatherIndividual}`}>
-      <p>{current.name}</p>
-      <div
-        onMouseOver={() => setHover(true)}
-        onMouseOut={() => setHover(false)}
-      >
-        <Image src={icon} alt={current.shortForecast} width={75} height={75} />
-        <p>{current.shortForecast}</p>
-        <p>{current.temperature}°</p>
-      </div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      className={styles.forecastCard}
+      onMouseOver={() => setHover(true)}
+      onMouseOut={() => setHover(false)}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+    >
+      <p className="text-xs font-medium text-foreground-muted text-center">{current.name}</p>
+      <Image src={icon} alt={current.shortForecast} width={56} height={56} />
+      <p className="text-xl font-bold text-foreground">{current.temperature}°</p>
+      <p className="text-xs text-foreground-subtle text-center leading-tight capitalize line-clamp-2">
+        {current.shortForecast}
+      </p>
+    </motion.div>
   )
 }
-

@@ -1,65 +1,78 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import {Listbox, ListboxItem} from "@nextui-org/react";
+import { motion } from 'framer-motion'
+import { Listbox, ListboxItem } from "@nextui-org/react"
 import { duck } from '@/interfaces'
 import style from '@/styles/Duck.module.css'
 
 function CheckLeekDuck() {
+  const [elements, setElements] = useState<Array<duck>>([])
+  const [loaded, setLoaded] = useState<boolean>(false)
 
-    const [elements, setElements] = useState<Array<duck>>([])
-    const [duck, setDuck] = useState<boolean>(false);
+  const openDuck = (url: string) => {
+    window.open(url, '_blank')?.focus()
+  }
 
-    const ListboxWrapper = ({children}:any) => (
-        <div className="w-full border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
-            {children}
-        </div>
-    )
-    
-    const openDuck = (url: string) => {
-        window.open(url, '_blank')?.focus();
+  useEffect(() => {
+    if (loaded) return
+    const getDuck = async () => {
+      const res = await fetch('/api/ducks/get', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      res.json().then((data) => {
+        setElements(data.formatted)
+        setLoaded(true)
+      })
     }
-
-    useEffect(() => {
-
-        if (duck) return
-        const getDuck = async () => {
-            const res = await fetch('/api/ducks/get', { 
-                method: 'GET', 
-                headers: {
-                    'Content-Type': 'application/json'
-                }, 
-            })
-            res.json().then((data) => {
-                setElements(data.formatted)  
-                setDuck(true)           
-            })
-        }
-
-        getDuck()
-
-    }, [duck])
+    getDuck()
+  }, [loaded])
 
   return (
-    <div className={`container ${style.DuckContainer}`}>
-        <ListboxWrapper>
-            <Listbox variant="flat" aria-label="Listbox menu with descriptions"
-                items={elements}
+    <section className="h-full flex flex-col">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-lg font-semibold text-foreground">Pokémon GO Events</h2>
+        <span className="text-xs text-foreground-subtle">via LeekDuck</span>
+      </div>
+
+      <motion.div
+        className={style.DuckContainer}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Listbox
+          variant="flat"
+          aria-label="Pokémon GO events"
+          items={elements}
+          classNames={{
+            base: "w-full p-0",
+            list: "p-0",
+          }}
+        >
+          {(item) => (
+            <ListboxItem
+              className={style.item}
+              onClick={() => openDuck(String(item.infoLink))}
+              key={String(item._id)}
+              textValue={String(item.name)}
             >
-                {(item) => (
-                    <ListboxItem className={style.item} onClick={() => openDuck(String(item.infoLink))} key={String(item._id)} textValue={String(item.category)} >
-                        <div className="flex gap-2 items-center">
-                            <img alt={String(item.category)} className={`flex-shrink-0 ${style.avatar}`} src={String(item.img)} />
-                            <div className="flex flex-col">
-                                <span className="text-small">{item.name}</span>
-                                <span className="text-tiny text-default-400">{item.date}</span>
-                            </div>
-                        </div>
-                    </ListboxItem>
-                )}
-            </Listbox>
-        </ListboxWrapper>
-    </div>
+              <div className="flex gap-3 items-center">
+                <img
+                  alt={String(item.category)}
+                  className={style.avatar}
+                  src={String(item.img)}
+                />
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-medium text-foreground truncate">{item.name}</span>
+                  <span className="text-xs text-foreground-muted">{item.date}</span>
+                </div>
+              </div>
+            </ListboxItem>
+          )}
+        </Listbox>
+      </motion.div>
+    </section>
   )
 }
 

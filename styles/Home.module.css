@@ -1,5 +1,7 @@
 .title {
-  text-align: center;
-  margin: .5em;
-  padding: 1em;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: hsl(var(--foreground));
+  margin-bottom: 0.25rem;
 }

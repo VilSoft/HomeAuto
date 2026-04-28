@@ -1,32 +1,43 @@
-import QuickLinkCard from "./QuickLinkCard";
-import { services } from "./Service";
+import { motion } from "framer-motion"
+import { staggerContainer } from "@/utils/animations"
+import QuickLinkCard from "./QuickLinkCard"
+import { services } from "./Service"
 
 export default function QuickLinks() {
-  // Separate admin and regular services
-  const regularServices = services.filter((s) => !s.admin);
-  const adminServices = services.filter((s) => s.admin);
+  const regularServices = services.filter((s) => !s.admin)
+  const adminServices = services.filter((s) => s.admin)
 
   return (
-    <section className="mt-8">
-      {/* Regular Services */}
-      <h2 className="mb-4 text-lg font-semibold">Self-Hosted Services</h2>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {regularServices.map((service) => (
-          <QuickLinkCard key={service.id} service={service} />
+    <section className="rounded-xl border border-[hsl(var(--card-border))] bg-card p-6 shadow-card h-full">
+      <h2 className="text-lg font-semibold text-foreground mb-5">Self-Hosted Services</h2>
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+      >
+        {regularServices.map((service, i) => (
+          <QuickLinkCard key={service.id} service={service} index={i} />
         ))}
-      </div>
+      </motion.div>
 
-      {/* Admin Services */}
       {adminServices.length > 0 && (
         <>
-          <h2 className="mt-8 mb-4 text-lg font-semibold">Admin Services</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {adminServices.map((service) => (
-              <QuickLinkCard key={service.id} service={service} />
+          <h2 className="text-sm font-semibold text-foreground-muted mt-6 mb-3 uppercase tracking-wider">Admin</h2>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+          >
+            {adminServices.map((service, i) => (
+              <QuickLinkCard key={service.id} service={service} index={regularServices.length + i} />
             ))}
-          </div>
+          </motion.div>
         </>
       )}
     </section>
-  );
+  )
 }

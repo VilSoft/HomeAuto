@@ -1,17 +1,20 @@
 .LinkContainer {
-    border: solid 2px gray;
-    border-radius: 1em;
-    background-color: lightgray;
-    position: relative;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--card-border));
+  border-radius: var(--radius-lg);
+  transition: border-color 200ms ease, background-color 200ms ease, transform 150ms ease;
 }
 
 .LinkContainer:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-    background-color: darkgrey !important;
+  border-color: hsl(var(--primary) / 0.35);
+  background-color: hsl(var(--surface-raised));
 }
 
 .text {
-    color: black;
-    text-decoration: none;
+  color: hsl(var(--foreground));
+  text-decoration: none;
+}
+
+.textMuted {
+  color: hsl(var(--foreground-muted));
 }

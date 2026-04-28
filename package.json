@@ -24,6 +24,7 @@
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "framer-motion": "^12.38.0",
     "https-proxy-agent": "^7.0.2",
     "lucide-react": "^0.292.0",
     "mongodb-client-encryption": "^6.0.0",

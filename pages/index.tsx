@@ -1,37 +1,38 @@
-import Image from 'next/image'
-import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
-// import "./globals.css";
+import { motion } from 'framer-motion'
 import style from '@/styles/Home.module.css'
-// import { Weather, Swim } from '@/components'
 import Layout from '@/components/Layout'
 import Weather from '@/components/Weather'
-import Swim from '@/components/Swim'
-import CheckLeekDuck from '@/components/CheckLeekDuck';
-import QuickLinks from '@/components/QuickLinks';
+import CheckLeekDuck from '@/components/CheckLeekDuck'
+import QuickLinks from '@/components/QuickLinks'
+import { staggerContainer, fadeUp } from '@/utils/animations'
 
 export default function Home() {
   return (
     <Layout>
-      <h1 className={style.title}>
-        The Kai Kassie House&nbsp;
-      </h1>
-      <div className="container">
-        <div className="row">
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8"
+      >
+        <motion.div variants={fadeUp} custom={0}>
+          <h1 className={style.title}>The Kai Kassie House</h1>
+          <p className="text-sm text-foreground-muted">Home dashboard</p>
+        </motion.div>
+
+        <motion.div variants={fadeUp} custom={1}>
           <Weather />
-        </div>
-        <div className="row">
-          {/* Masters has been deprecated for now? */}
-          {/* <div className="col-sm">
-            <Swim />
-          </div> */}
-          <div className="col-sm">
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <motion.div variants={fadeUp} custom={2} className="lg:col-span-3">
             <QuickLinks />
-          </div>
-          <div className="col-sm">
+          </motion.div>
+          <motion.div variants={fadeUp} custom={3} className="lg:col-span-2">
             <CheckLeekDuck />
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </Layout>
   )
 }

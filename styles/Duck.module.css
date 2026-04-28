@@ -1,35 +1,33 @@
 .DuckContainer {
-    border: solid 2px gray;
-    border-radius: 1em;
-    background-color: lightgray;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    height: 15%;
-    position: relative;
+  border: 1px solid hsl(var(--card-border));
+  border-radius: var(--radius-xl);
+  background: hsl(var(--card));
+  overflow: hidden;
+  max-height: 480px;
+  overflow-y: auto;
+  box-shadow: var(--card-shadow);
 }
 
 .item {
-    margin-bottom: 10px;
-    padding-left: 0 !important;
-    border-radius: 1em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+  border-radius: 0 !important;
+  transition: background-color 150ms ease;
+}
+
+.item:last-child {
+  border-bottom: none;
 }
 
 .item:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-    background-color: darkgrey !important;
-}
-
-.item:nth-child(even) {
-    background-color: rgba(128, 128, 128, 0.301);
-}
-
-.item:focus {
-    outline: none;
+  cursor: pointer;
+  background-color: hsl(var(--surface-raised)) !important;
 }
 
 .avatar {
-    border-radius: 1em;
-    left: 0;
-    max-width: 10em;
+  border-radius: 0.5rem;
+  max-width: 3.5rem;
+  width: 3.5rem;
+  height: auto;
+  flex-shrink: 0;
 }
