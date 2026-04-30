@@ -41,4 +41,11 @@ export const services: Service[] = [
     url: "http://recipes.server0.home",
     icon: icons.Kassiesrecipies,
   },
+    {
+    id: "kassies",
+    name: "Kassies Crochet",
+    description: "Crochet patterns",
+    url: "http://crochet.server0.home",
+    icon: icons.Kassiescrochet,
+  },
 ];
