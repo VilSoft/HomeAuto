@@ -1,6 +1,9 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "@/redux/store"
+import { setTimezone } from "@/redux/features/locationSlice"
 import styles from "@/styles/Weather.module.css"
 import Axios from "./Axios"
 import Forecast from "./Forecast"
@@ -11,6 +14,7 @@ interface Location {
   name: string
   lat: number
   lon: number
+  timezone: string
   default?: boolean
 }
 
@@ -22,6 +26,7 @@ interface ForecastPeriod {
 }
 
 export default function Weather() {
+  const dispatch = useDispatch<AppDispatch>()
   const defaultLocation: Location =
     (locations as Location[]).find(l => l.default) ??
     (locations as Location[])[0]
@@ -31,6 +36,12 @@ export default function Weather() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => setRefreshKey(k => k + 1), 60 * 60 * 1000)
+    return () => clearInterval(id)
+  }, [])
 
   useEffect(() => {
     if (!location) return
@@ -69,7 +80,7 @@ export default function Weather() {
         setIsTransitioning(false)
       })
       .finally(() => setLoading(false))
-  }, [location])
+  }, [location, refreshKey])
 
   return (
     <div className={styles.weatherCard}>
@@ -82,7 +93,10 @@ export default function Weather() {
             const selected = (locations as Location[]).find(
               l => l.id === e.target.value
             )
-            if (selected) setLocation({ ...selected })
+            if (selected) {
+              setLocation({ ...selected })
+              dispatch(setTimezone(selected.timezone))
+            }
           }}
         >
           {(locations as Location[]).map(loc => (

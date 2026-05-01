@@ -4,6 +4,7 @@ import Layout from '@/components/Layout'
 import Weather from '@/components/Weather'
 import CheckLeekDuck from '@/components/CheckLeekDuck'
 import QuickLinks from '@/components/QuickLinks'
+import Clock from '@/components/Clock'
 import { staggerContainer, fadeUp } from '@/utils/animations'
 
 export default function Home() {
@@ -15,9 +16,12 @@ export default function Home() {
         animate="visible"
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8"
       >
-        <motion.div variants={fadeUp} custom={0}>
-          <h1 className={style.title}>The Kai Kassie House</h1>
-          <p className="text-sm text-foreground-muted">Home dashboard</p>
+        <motion.div variants={fadeUp} custom={0} className="flex justify-between items-start">
+          <div>
+            <h1 className={style.title}>The Kai Kassie House</h1>
+            <p className="text-sm text-foreground-muted">Home dashboard</p>
+          </div>
+          <Clock />
         </motion.div>
 
         <motion.div variants={fadeUp} custom={1}>

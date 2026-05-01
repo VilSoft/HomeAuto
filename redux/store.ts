@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import swimReducer from "./features/swimSlices"
+import locationReducer from "./features/locationSlice"
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = configureStore({
     reducer: {
-        swimReducer
+        swimReducer,
+        locationReducer
     }
 })
 

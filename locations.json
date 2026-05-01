@@ -4,6 +4,7 @@
     "name": "Germantown, MD",
     "lat": 39.1732,
     "lon": -77.2717,
+    "timezone": "America/New_York",
     "default": true
   },
   {
@@ -11,6 +12,7 @@
     "name": "Chicago, IL",
     "lat": 41.8781,
     "lon": -87.6298,
+    "timezone": "America/Chicago",
     "default": false
   }
 ]
