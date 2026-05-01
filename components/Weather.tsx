@@ -23,6 +23,7 @@ interface ForecastPeriod {
   shortForecast: string
   temperature: number
   icon: string
+  isDaytime: boolean
 }
 
 export default function Weather() {

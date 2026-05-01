@@ -10,6 +10,7 @@ interface ForecastPeriod {
   shortForecast: string
   temperature: number
   icon: string
+  isDaytime: boolean
 }
 
 interface ForecastProps {
@@ -17,28 +18,52 @@ interface ForecastProps {
 }
 
 const iconMap: Record<string, any> = {
-  skc: { day: icons.ClearDay, night: icons.ClearNight },
-  few: { day: icons.ClearDay, night: icons.ClearNight },
-  sct: { day: icons.PartlyCloudyDay, night: icons.PartlyCloudyNight },
-  bkn: { day: icons.PartlyCloudyDay, night: icons.PartlyCloudyNight },
-  ovc: { day: icons.PartlyCloudyDay, night: icons.PartlyCloudyNight },
-  wind_skc: { day: icons.Wind, night: icons.Wind },
-  wind_few: { day: icons.Wind, night: icons.Wind },
-  snow: { day: icons.PartlyCloudyDaySnow, night: icons.PartlyCloudyNightSnow },
-  rain: { day: icons.Rain, night: icons.Rain },
-  tsra: { day: icons.ThunderstormsDayRain, night: icons.ThunderstormsNightRain },
-  tornado: { day: icons.Tornado, night: icons.Tornado },
-  hurricane: { day: icons.Hurricane, night: icons.Hurricane },
-  dust: { day: icons.DustDay, night: icons.DustNight },
-  smoke: { day: icons.Smoke, night: icons.Smoke },
-  haze: { day: icons.HazeDay, night: icons.HazeNight },
-  hot: { day: icons.ThermometerHot, night: icons.ThermometerHot },
-  cold: { day: icons.ThermometerCold, night: icons.ThermometerCold },
-  blizzard: { day: icons.Snow, night: icons.Snow },
-  fog: { day: icons.FogDay, night: icons.FogNight },
-  sleet: { day: icons.Sleet, night: icons.Sleet },
-  rain_snow: { day: icons.RainDrops, night: icons.RainDrops },
-  smoke_particles: { day: icons.SmokeParticles, night: icons.SmokeParticles },
+  // clear
+  skc:              { day: icons.ClearDay,                  night: icons.ClearNight },
+  few:              { day: icons.ClearDay,                  night: icons.ClearNight },
+  // partly cloudy
+  sct:              { day: icons.PartlyCloudyDay,           night: icons.PartlyCloudyNight },
+  bkn:              { day: icons.PartlyCloudyDay,           night: icons.PartlyCloudyNight },
+  // overcast
+  ovc:              { day: icons.OvercastDay,               night: icons.OvercastNight },
+  // wind
+  wind_skc:         { day: icons.Wind,                      night: icons.Wind },
+  wind_few:         { day: icons.Wind,                      night: icons.Wind },
+  wind_sct:         { day: icons.Wind,                      night: icons.Wind },
+  wind_bkn:         { day: icons.Wind,                      night: icons.Wind },
+  wind_ovc:         { day: icons.Wind,                      night: icons.Wind },
+  // rain
+  rain:             { day: icons.Rain,                      night: icons.Rain },
+  rain_showers:     { day: icons.PartlyCloudyDayRain,       night: icons.PartlyCloudyNightRain },
+  rain_showers_hi:  { day: icons.PartlyCloudyDayRain,       night: icons.PartlyCloudyNightRain },
+  // drizzle / mixed precip
+  rain_snow:        { day: icons.PartlyCloudyDaySnow,       night: icons.PartlyCloudyNightSnow },
+  rain_sleet:       { day: icons.PartlyCloudyDaySleet,      night: icons.PartlyCloudyNightSleet },
+  snow_sleet:       { day: icons.Sleet,                     night: icons.Sleet },
+  fzra:             { day: icons.Sleet,                     night: icons.Sleet },
+  rain_fzra:        { day: icons.PartlyCloudyDaySleet,      night: icons.PartlyCloudyNightSleet },
+  snow_fzra:        { day: icons.PartlyCloudyDaySnow,       night: icons.PartlyCloudyNightSnow },
+  sleet:            { day: icons.Sleet,                     night: icons.Sleet },
+  // snow
+  snow:             { day: icons.Snow,                      night: icons.Snow },
+  blizzard:         { day: icons.Snow,                      night: icons.Snow },
+  // thunderstorms
+  tsra:             { day: icons.ThunderstormsDayRain,      night: icons.ThunderstormsNightRain },
+  tsra_sct:         { day: icons.ThunderstormsDay,          night: icons.ThunderstormsNight },
+  tsra_hi:          { day: icons.ThunderstormsDay,          night: icons.ThunderstormsNight },
+  // tropical
+  tornado:          { day: icons.Tornado,                   night: icons.Tornado },
+  hurricane:        { day: icons.Hurricane,                 night: icons.Hurricane },
+  tropical_storm:   { day: icons.Hurricane,                 night: icons.Hurricane },
+  // visibility
+  fog:              { day: icons.FogDay,                    night: icons.FogNight },
+  haze:             { day: icons.HazeDay,                   night: icons.HazeNight },
+  smoke:            { day: icons.Smoke,                     night: icons.Smoke },
+  smoke_particles:  { day: icons.SmokeParticles,            night: icons.SmokeParticles },
+  dust:             { day: icons.DustDay,                   night: icons.DustNight },
+  // extreme
+  hot:              { day: icons.ThermometerHot,            night: icons.ThermometerHot },
+  cold:             { day: icons.ThermometerCold,           night: icons.ThermometerCold },
 }
 
 export default function Forecast({ day }: ForecastProps) {
@@ -54,7 +79,7 @@ export default function Forecast({ day }: ForecastProps) {
   }
 
   const iconCode = getCode(current.icon)
-  const icon = iconMap[iconCode]?.[hover ? "night" : "day"] ?? icons.ClearDay
+  const icon = iconMap[iconCode]?.[current.isDaytime ? "day" : "night"] ?? icons.ClearDay
 
   return (
     <motion.div
