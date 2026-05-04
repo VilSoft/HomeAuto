@@ -1,5 +1,11 @@
 import * as icons from '@/icons/links'
 
+export type ServiceAction = {
+  type: 'api-key-prompt';
+  endpoint: string;
+  method: string;
+};
+
 export type Service = {
   id: string;
   name: string;
@@ -8,6 +14,7 @@ export type Service = {
   icon: string;        // path under /public
   admin?: boolean;
   internal?: boolean;  // future use
+  action?: ServiceAction;
 };
 
 export const services: Service[] = [
@@ -26,6 +33,19 @@ export const services: Service[] = [
     url: "http://portainer.server0.home/",
     icon: icons.Portainer,
     admin: true
+  },
+    {
+    id: "jellyfin-backup",
+    name: "Jellyfin Backup",
+    description: "Trigger media backup",
+    url: "",
+    icon: icons.Jellyfin,
+    admin: true,
+    action: {
+      type: 'api-key-prompt',
+      endpoint: 'http://server0.home:8765/backup',
+      method: 'POST',
+    }
   },
   {
     id: "jellyfin",
