@@ -43,7 +43,7 @@ export const services: Service[] = [
     admin: true,
     action: {
       type: 'api-key-prompt',
-      endpoint: 'http://server0.home:8765/backup',
+      endpoint: 'http://server0.home:8765/jellyfin-backup/backup',
       method: 'POST',
     }
   },
